@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using OpenQA.Selenium;
 
@@ -32,12 +33,34 @@ namespace AmaryllisTest.AutomatedUI
         private IWebElement AddChildrenElement => _driver.FindElement(By.CssSelector(
             "#xp__guests__inputs-container > div > div > div.sb-group__field.sb-group-children > div > div.bui-stepper__wrapper.sb-group__stepper-a11y > button.bui-button.bui-button--secondary.bui-stepper__add-button"));
         private IWebElement ChildrenAgeElement => _driver.FindElement(By.Name("age"));
-        private IWebElement Children12 => _driver.FindElement(By.CssSelector("#xp__guests__inputs-container > div > div > div.sb-group__children__field.clearfix > select > option:nth-child(12)"));
+        private IWebElement Children12 => ChildrenAgeElement.FindElement(By.CssSelector("#xp__guests__inputs-container > div > div > div.sb-group__children__field.clearfix > select > option:nth-child(12)"));
         private IWebElement SearchBoxElement =>
             _driver.FindElement(By.CssSelector(".sb-searchbox__button > span:nth-child(1)"));
 
         public string Language => CurrentLanguageMeta.GetAttribute("content");
         public string Url => _driver.Url;
         public int Children => int.Parse(ChildrenCountElement.Text);
+
+        public HomePage(IWebDriver driver)
+        {
+            _driver = driver;
+        }
+
+        public void Navigate() => _driver.Navigate().GoToUrl(URI);
+        public void Fullscreen() => _driver.Manage().Window.FullScreen();
+        public void SwitchLanguage() => CurrentLanguageElement.Click();
+        public void SelectLanguage() => SwedenLanguageElement.Click();
+        public void GetTickets() => TicketsElement.Click();
+        public void LocationFilter() => LocationFilterElement.Click();
+        public void SendLocation(string location) => LocationFilterElement.SendKeys(location);
+        public void Dates() => DatesElement.Click();
+        public void SetStartDate() => StartDateElement.Click();
+        public void SetEndDate() => EndDateElement.Click();
+        public void Guests() => GuestsElement.Click();
+        public void AddChildren() => AddChildrenElement.Click();
+        public void SubtractChildren() => SubtractChildrenElement.Click();
+        public void ChildrenAge() => ChildrenAgeElement.Click();
+        public void SetChildrenAge() => Children12.Click();
+        public void SearchByFilters() => SearchBoxElement.Click();
     }
 }
