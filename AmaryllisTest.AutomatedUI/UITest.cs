@@ -15,6 +15,7 @@ namespace AmaryllisTest.AutomatedUI
         public void Setup()
         {
             ChromeOptions options = new ChromeOptions();
+            options.AddArgument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36");
             //options.AddLocalStatePreference("excludeSwitches", "enable-automation");
             //options.AddLocalStatePreference("useAutomationExtension", false);
             //options.AddArgument("--disable-blink-features=AutomationControlled");
@@ -37,13 +38,13 @@ namespace AmaryllisTest.AutomatedUI
         [Test]
         public void Open_TicketsPage_ReturnsNothing()
         {
-            _page.GetTickets();
+            _page.GetTickets();//Сделать через прокси или что-то такое
 
             Assert.True(_page.Url.StartsWith("https://www.booking.com/flights"));
         }
 
         [Test]
-        public void Open_ProfilePage_ReturnsProfilePage()
+        public void Open_ProfilePage_ReturnsProfilePage() //а это просто сделать
         {
             _driver.Navigate().GoToUrl("https://www.booking.com");
             //_driver.Manage().Window.Size = new System.Drawing.Size(945, 1020);
@@ -51,17 +52,17 @@ namespace AmaryllisTest.AutomatedUI
             _driver.FindElement(By.CssSelector(".js-header-login-link:nth-child(2) > .bui-button__text")).Click();
 
             _driver.FindElement(By.Id("username")).SendKeys("wacakh@fexbox.org");
-            _driver.FindElement(By.CssSelector(".\\_1jp30RWusTBQoML9GSCZ_C")).Click();
+            _driver.FindElement(By.CssSelector("#root > div > div > div > div.app > div.access-container.bui_font_body > div > div > div > div > div > div > form > div:nth-child(3) > button")).Click();
 
-            {
-                var element = _driver.FindElement(By.CssSelector(".\\_3idbYJ1oAGD-sl-6gdCR2e:nth-child(1)"));
-                Actions builder = new Actions(_driver);
-                builder.MoveToElement(element).Perform();
-            }
+            //{
+            //    var element = _driver.FindElement(By.CssSelector("#root > div > div > div > div.app > div.access-container.bui_font_body > div > div > div > div > div > div > form > button"));
+            //    Actions builder = new Actions(_driver);
+            //    builder.MoveToElement(element).Perform();
+            //}
 
             _driver.FindElement(By.Id("password")).SendKeys("381a2ty958N");
             //new Actions(_driver).ClickAndHold(_driver.FindElement(By.CssSelector(".\\_3idbYJ1oAGD-sl-6gdCR2e")));
-            _driver.FindElement(By.CssSelector(".\\_3idbYJ1oAGD-sl-6gdCR2e")).Click();
+            _driver.FindElement(By.CssSelector("#root > div > div > div > div.app > div.access-container.bui_font_body > div > div > div > div > div > div > form > button")).Click();
 
             _driver.FindElement(By.CssSelector(".bui-f-color-complement")).Click();
             _driver.FindElement(By.CssSelector(".bui-dropdown-menu__item:nth-child(1) .bui-dropdown-menu__text")).Click();
@@ -76,11 +77,11 @@ namespace AmaryllisTest.AutomatedUI
             _page.LocationFilter();
             _page.SendLocation("Варшава");
 
-            _page.Dates();
+            _page.Dates();//Сделать выбор даты по ТЗ
             _page.SetStartDate();
             _page.SetEndDate();
 
-            _page.Guests();
+            _page.Guests();//количество людей, количество номеров
             {
                 var count = _page.Children;
 
